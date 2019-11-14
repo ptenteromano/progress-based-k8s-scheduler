@@ -2,7 +2,7 @@
 
 ### Install k8s cluster using steps below
 There is detailed version from Shaolun Zhang and Philip Tenteromano
-[repo](https://github.com/ptenteromano/summer)
+- [repo](https://github.com/ptenteromano/summer)
 
 ### Set up prometheus and grafana monitor system
 - Readme [here](https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/README.md)
@@ -118,3 +118,5 @@ Adjust the number of assistance pod
 
 Change `scheduler pod` config to its node name
 
+### When that is done
+- run `./apply_assistants.sh`

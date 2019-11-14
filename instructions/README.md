@@ -2,10 +2,10 @@
 
 ### Install k8s cluster using steps below
 There is detailed version from Shaolun Zhang and Philip Tenteromano
-https://github.com/ptenteromano/summer
+[repo](https://github.com/ptenteromano/summer)
 
 ### Set up prometheus and grafana monitor system
-- Readme [here] (https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/README.md)
+- Readme [here](https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/README.md)
 
 ### Dashboards
 ```

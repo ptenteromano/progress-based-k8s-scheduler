@@ -38,7 +38,7 @@ spec:
         tier: control-plane
         version: second
     spec:
-      nodeName: master.workwork.shield-pg0.utah.cloudlab.us
+      nodeName: node-0.phil-cap.shield-pg0.utah.cloudlab.us
       serviceAccountName: my-scheduler
       containers:
       - image: fuyuqi1995/base-scheduler
@@ -46,7 +46,7 @@ spec:
         volumeMounts:
           - mountPath: "/data/"
             name: task-pv-storage
-      volumes: 
+      volumes:
           - name: task-pv-storage
             persistentVolumeClaim:
               claimName: pvc1-nfs-system

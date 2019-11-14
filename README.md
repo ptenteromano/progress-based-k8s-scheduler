@@ -4,7 +4,7 @@
 - Use this [repo](https://github.com/ptenteromano/summer) and follow the README
 
 # Prometheus + grafana for k8s
-- Use this [readme](https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/prometheus%20%2B%20grafana%20for%20k8s.md)
+- Use this [readme](https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/README.md)
 
 # NFS system
 - Use this [readme](https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/instructions/README.md#set-up-nfs-system)

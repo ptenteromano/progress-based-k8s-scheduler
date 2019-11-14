@@ -1,52 +1,28 @@
 # Build a cluster for own-designed k8s scheduler
 
-## set up kubernetes clusters
+### Install k8s cluster using steps below
+There is detailed version from Shaolun Zhang and Philip Tenteromano
+https://github.com/ptenteromano/summer
 
-git clone https://github.com/fishercht1995/progress-based-k8s-scheduler.git
+### Set up prometheus and grafana monitor system
+- Readme [here] (https://github.com/ptenteromano/progress-based-k8s-scheduler/blob/master/pgmonitor/README.md)
 
-
-There is detailed version from Shaolun Zhang
-https://github.com/zsl3203/summer
-
-
-### in master node
-
-deploy k8s system
-```
-./progress-based-k8s-scheduler/kubernetes/deploy.sh
-```
-init k8s in the master node, and get `token`
-```
-./progress-based-k8s-scheduler/kubernetes/init.sh
-```
-
-### in worker node
-deploy k8s system
-```
-./progress-based-k8s-scheduler/kubernetes/deploy.sh
-```
-Using Token get in the first step, so the worker will join into k8s cluster
-
-## set up prometheus and grafana monitor system
-
-### in master
-```
-./progress-based-k8s-scheduler/pgmonitor/master.sh
-```
 ### Dashboards
 ```
 Dashboards Import: https:///dashboards/315
 ```
 
-## set up nfs system
+# Set up nfs system
 
-### in both master and worker nodes
+### In both master and worker nodes
 get externel ip address
 ```
 dig +short myip.opendns.com @resolver1.opendns.com
 ```
+or if alias is installed, run the command `my_ip`
 
 ### on master
+- You can also run `./nfs_master_1.sh`
 ```
 sudo apt-get update
 sudo apt install nfs-kernel-server
@@ -55,23 +31,35 @@ sudo chown nobody:nogroup /mnt/linuxidc
 sudo chmod 777 /mnt/linuxidc
 
 sudo nano /etc/exports
+```
 
+- Once the file opens, add the lines below, but replace `masterIP, clientIP, etc` with the respective external ip addresses
+
+```
 /mnt/linuxidc masterIP(rw,sync,no_subtree_check)
 /mnt/linuxidc client1IP(rw,sync,no_subtree_check)
 /mnt/linuxidc client2IP(rw,sync,no_subtree_check)
+```
 
+- Finish running the last two commands
+- You can also run `./nfs_master_2.sh`
+
+```
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 ```
 
-### on worker
+### On worker
+- You can also run `./nfs_worker.sh`
 ```
 sudo apt-get update
 sudo apt-get install nfs-common
 sudo mkdir -p /mnt/linuxidc_client
+```
 
+- Run the command below, but replace `master_ip` with the master's external ip address
+```
 sudo mount master_ip:/mnt/linuxidc /mnt/linuxidc_client
-
 ```
 
 ## set up configuration in kubernetes
@@ -85,7 +73,7 @@ kubectl edit clusterrole system:kube-scheduler
 add `my-scheduler` in `resourceNames:`
 
 
-add after config file 
+Append the following to the config file
 ```
 - apiGroups:
   - storage.k8s.io
@@ -96,7 +84,7 @@ add after config file
   - list
   - get
 ```
-change AUTH
+Change AUTH:
 ```
 - apiGroups:
   - ""
@@ -109,19 +97,24 @@ change AUTH
   - watch
   - create
 ```
+
 ### step 2
 
-change `pv` and `pv0` config for its service ip address
+Change `pv` and `pv0` config for its service ip address
 
-apply `pv`,`pv0`,`pvc`,`pvc0`
+Apply `pv`,`pv0`,`pvc`,`pvc0`
+`kubectl apply -f _filename_`
 
 ### step 3
 
-change `assistance pod` config for their node name
+#### In `../builds/`:
+`/build_assistant/`
+Change `assistance pod` config to their node name
 
-adjust the number of assistance pod
+Adjust the number of assistance pod
 
-### step 4
+#### In `../builds/`:
+`/build_scheduler/deployment.yaml`
 
-change `scheduler pod` config for its node name
+Change `scheduler pod` config to its node name
 
